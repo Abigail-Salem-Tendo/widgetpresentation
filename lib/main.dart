@@ -10,13 +10,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(colorSchemeSeed: Colors.indigo, useMaterial3: true),
-      home: const PaddingDemo(),
+      home: const OrderScreen(),
     );
   }
 }
 
-class PaddingDemo extends StatelessWidget {
-  const PaddingDemo({super.key});
+// Screen: the same food order card, without and with Padding
+class OrderScreen extends StatelessWidget {
+  const OrderScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,39 +33,15 @@ class PaddingDemo extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Padding(
-              padding: EdgeInsets.only(bottom: 16),
-              child: Text(
-                'Blue = space added by Padding  |  White = the child',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14, color: Colors.black54),
-              ),
-            ),
-            PaddingExample(
-              label: 'No padding',
-              code: 'EdgeInsets.zero',
-              padding: EdgeInsets.zero,
-            ),
-            PaddingExample(
-              label: 'Same space on all 4 sides',
-              code: 'EdgeInsets.all(16)',
-              padding: EdgeInsets.all(16),
-            ),
-            PaddingExample(
-              label: 'Paired sides (left/right, top/bottom)',
-              code: 'EdgeInsets.symmetric(horizontal: 32, vertical: 8)',
-              padding: EdgeInsets.symmetric(horizontal: 32, vertical: 8),
-            ),
-            PaddingExample(
-              label: 'Only the sides you name',
-              code: 'EdgeInsets.only(left: 40, bottom: 12)',
-              padding: EdgeInsets.only(left: 40, bottom: 12),
-            ),
-            PaddingExample(
-              label: 'Each side set individually',
-              code: 'EdgeInsets.fromLTRB(40, 8, 8, 24)',
-              padding: EdgeInsets.fromLTRB(40, 8, 8, 24),
-            ),
+            Text('Without Padding',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            SizedBox(height: 8),
+            OrderCardWithoutPadding(),
+            SizedBox(height: 32),
+            Text('With Padding',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            SizedBox(height: 8),
+            OrderCardWithPadding(),
           ],
         ),
       ),
@@ -72,65 +49,89 @@ class PaddingDemo extends StatelessWidget {
   }
 }
 
-class PaddingExample extends StatelessWidget {
-  final String label;
-  final String code;
-  final EdgeInsets padding;
-
-  const PaddingExample({
-    super.key,
-    required this.label,
-    required this.code,
-    required this.padding,
-  });
+// no spacing, everything touches
+class OrderCardWithoutPadding extends StatelessWidget {
+  const OrderCardWithoutPadding({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.white,
-      elevation: 2,
-      margin: const EdgeInsets.only(bottom: 16),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              label,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 6),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade200,
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: Text(
-                code,
-                style: const TextStyle(fontSize: 13, fontFamily: 'monospace'),
-              ),
-            ),
-            const SizedBox(height: 12),
-            // The demo box: blue background shows the padding space
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.indigo,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Padding(
-                padding: padding, // attribute 1: padding
-                child: Container(  // attribute 2: child (white = the child)
-                  color: Colors.white,
-                  child: const Text(
-                    'Hello, Padding!',
+      child: Row(
+        children: [
+          Container(
+            width: 80,
+            height: 80,
+            color: Colors.orange,
+            child: const Icon(Icons.restaurant, color: Colors.white, size: 40),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Chicken Pilau',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                const Text("Mama's Kitchen",
+                    style: TextStyle(color: Colors.grey)),
+                const Text('\$8.50',
                     style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.indigo,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green)),
+                ElevatedButton(
+                    onPressed: () {}, child: const Text('Order now')),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// The Padding widget's key property is `padding`. We demo it with
+// three EdgeInsets values. LIVE EDIT: change a number, press r (hot reload).
+class OrderCardWithPadding extends StatelessWidget {
+  const OrderCardWithPadding({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        // ATTRIBUTE 1: EdgeInsets.all -> same space on all 4 sides
+        padding: const EdgeInsets.all(12),
+        child: Row(
+          children: [
+            Container(
+              width: 80,
+              height: 80,
+              color: Colors.orange,
+              child: const Icon(Icons.restaurant, color: Colors.white, size: 40),
+            ),
+            Expanded(
+              child: Padding(
+                // ATTRIBUTE 2: EdgeInsets.only -> space on chosen sides only
+                padding: const EdgeInsets.only(left: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Chicken Pilau',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    const Text("Mama's Kitchen",
+                        style: TextStyle(color: Colors.grey)),
+                    const Padding(
+                      // ATTRIBUTE 3: EdgeInsets.symmetric -> top+bottom (or
+                      // left+right) pairs in one line
+                      padding: EdgeInsets.symmetric(vertical: 6),
+                      child: Text('\$8.50',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green)),
                     ),
-                  ),
+                    ElevatedButton(
+                        onPressed: () {}, child: const Text('Order now')),
+                  ],
                 ),
               ),
             ),
