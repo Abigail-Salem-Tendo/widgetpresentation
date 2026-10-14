@@ -128,14 +128,7 @@ The comparison illustrates how the `Padding` widget helps improve layout spacing
    ```
 
 ## 8. Screenshot
-
-Add a screenshot of the running application to the repository.
-
-Save the screenshot in a folder named `screenshots` using the filename `padding-demo.png`.
-
-Once the image has been added, display it here:
-
-![Padding Widget Demo](screenshots/padding-demo.png)
+<img src='screenshot/PaddingPresentation.png'>
 
 ## 9. Conclusion
 
