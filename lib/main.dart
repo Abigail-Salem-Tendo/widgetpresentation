@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Screen: the same food order card, without and with Padding
+// the same food order card, without and with Padding
 class OrderScreen extends StatelessWidget {
   const OrderScreen({super.key});
 
@@ -88,8 +88,7 @@ class OrderCardWithoutPadding extends StatelessWidget {
   }
 }
 
-// The Padding widget's key property is `padding`. We demo it with
-// three EdgeInsets values. LIVE EDIT: change a number, press r (hot reload).
+// The Padding widget's key property is 'padding'.
 class OrderCardWithPadding extends StatelessWidget {
   const OrderCardWithPadding({super.key});
 
@@ -97,7 +96,7 @@ class OrderCardWithPadding extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        // ATTRIBUTE 1: EdgeInsets.all -> same space on all 4 sides
+        // EdgeInsets.all same space on all 4 sides
         padding: const EdgeInsets.all(12),
         child: Row(
           children: [
@@ -109,7 +108,7 @@ class OrderCardWithPadding extends StatelessWidget {
             ),
             Expanded(
               child: Padding(
-                // ATTRIBUTE 2: EdgeInsets.only -> space on chosen sides only
+                // EdgeInsets.only space on chosen sides only
                 padding: const EdgeInsets.only(left: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,8 +119,7 @@ class OrderCardWithPadding extends StatelessWidget {
                     const Text("Mama's Kitchen",
                         style: TextStyle(color: Colors.grey)),
                     const Padding(
-                      // ATTRIBUTE 3: EdgeInsets.symmetric -> top+bottom (or
-                      // left+right) pairs in one line
+                      //EdgeInsets.symmetric top+bottom (or left+right) pairs in one line
                       padding: EdgeInsets.symmetric(vertical: 6),
                       child: Text('\$8.50',
                           style: TextStyle(
